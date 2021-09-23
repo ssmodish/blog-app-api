@@ -22,6 +22,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "helmet": "^4.6.0",
-    "morgan": "^1.10.0"
+    "knex": "^0.95.11",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.0.2"
   }
 }
