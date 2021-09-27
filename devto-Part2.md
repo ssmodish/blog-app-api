@@ -200,7 +200,7 @@ _`/data/seeds/01-posts.js`_
 Now we can seed our database with this example data by running the following:
 
 ```bash
-npx knex seed:make 01-posts
+npx knex seed:run
 ```
 
 With these files set up, we can always revert our database to either be empty or include these basic seed files, which is great for testing purposes
