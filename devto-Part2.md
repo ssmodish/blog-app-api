@@ -214,3 +214,99 @@ git commit -m 'database seeded'
 
 ---
 
+## Build our post routes and models
+
+---
+
+You might have already guessed that we will be keeping our database calls separated from our routes with this setup. Any database calls should be made in our models file and our routes should just call the methods we setup there. This should make it easy to maintain. If we ever decide to change over to a different database, if one supported by knex we need only change or add to the `knexfile`. Otherwise, we just need to adjust our models to work with whatever other database we choose.
+
+```javascript
+const express = require('express')
+const Posts = require('./posts.models')
+
+const router = express.Router()
+
+// * [READ] ALL of the posts
+router.get('/', async (req, res) => {
+  try {
+    const data = await Posts.get() // expects an array of posts as data
+    res.json(data)
+  } catch (error) {
+   res.send(error)
+  }
+})
+// [READ] a post
+router.get('/:id', async (req, res) => {
+  const id = req.params.id
+  const data = await Posts.getById(id) // expects a single post object as data
+  res.json(data)
+})
+// [CREATE] a new post
+router.post('/', async (req, res) => {
+  const newPost = await Posts.create(req.body) // expects a single post object complete with new post_id
+  res.status(201).json(newPost) 
+})
+// [UPDATE] the data in a post
+router.put('/:id', async (req, res) => {
+  const id = req.params.id
+  const updatedPost = await Posts.update(id, req.body) // expects a single post object with updated data
+  res.json(updatedPost)
+})
+// [DELETE] a post
+router.delete('/:id', async (req, res) => {
+  const deletedPost = await Posts.remove(req.params.id) // expects a single post object of the deleted post
+  res.json(deletedPost)
+})
+
+module.exports = router
+```
+
+_`api/posts/posts.router.js`_
+
+---
+
+```javascript
+const db = require('../../data/db-config')
+
+function get() {
+  // return an array of posts
+  return db('posts')
+}
+
+function getById(id) {
+  // return a single post object
+  return db('posts').where("post_id", id).first()
+}
+
+async function create({ user_id, post_title, post_body }) {
+  // return a single post object that includes the new post_id
+  const [id] = await db('posts').insert({ user_id, post_title, post_body })
+  return getById(id)
+}
+
+async function update(id, { user_id, post_title, post_body }) {
+  // return a single post object of updated post
+  await db('posts').where("post_id", id).update({ user_id, post_title, post_body })
+  return getById(id)
+}
+
+async function remove(id) {
+  // return a single post object of deleted post
+  const deletedPost = await getById(id)
+  await db('posts').where("post_id", id).delete()
+  return deletedPost
+}
+
+module.exports = {
+  get,
+  getById,
+  create,
+  update,
+  remove
+}
+```
+
+_`api/posts/posts.models.js`_
+
+---
+
