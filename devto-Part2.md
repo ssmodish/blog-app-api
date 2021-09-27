@@ -49,20 +49,31 @@ module.exports = db
 
 _`/data/db-config.js`_
 
-Now we'll add that to the router where we'll soon use it. The beginning of `/api/posts/posts.router.js` should look like this:
+Now we'll add our models file that communicates directly with our database
 
-```javascript
-const express = require('express')
-const db = require('../../data/db-config')
-
-const router = express.Router()
+```bash
+touch api/posts/posts.models.js
 ```
 
-_`/api/posts/posts.router.js`_
+and start it with
+
+```javascript
+const db = require('../../data/db-config')
+
+module.exports = {
+  get,
+  getById,
+  create,
+  update,
+  remove
+}
+```
+
+_`/api/posts/posts.models.js`_
 
 ### Create a migration using Knex
 
-Using Knex, migrations are the files used to setup our database. First we'll tell Knex where to save them by adding the following to the knexfile.
+Using Knex, migrations are the files used to setup the tables in our database. First we'll tell Knex where to save them by adding the following to the knexfile.
 
 ```javascript
   migrations: {
@@ -78,15 +89,15 @@ And now we'll run the following:
   npx knex migrate:make posts-schema
 ```
 
-That should have created a `/data/migrations` directory and put a file _`<numbers>_posts-schema.js`_ in that directory.
+That should have created a `/data/migrations` directory and put a file _`<timestamp>_posts-schema.js`_ in that directory. Knex adds a timestamp because some tables might be dependent on others existing first.
 
-Open up _`<numbers>_posts-schema.js`_ and fill it out like so:
+Open up _`<timestamp>_posts-schema.js`_ and fill it out like so:
 
 ```javascript
 exports.up = function (knex) {
   return knex.schema.createTable('posts', (tbl) => {
     tbl.increments('post_id') // automatically increments a new number for each entry - this will be the Primary Key
-    tbl.text('user_id').notNullable() // this field is required
+    tbl.integer('user_id').notNullable() // this field is required
     tbl.text('post_title').unique().notNullable() // this field is both required and must be unique
     tbl.text('post_body')
   })
@@ -105,7 +116,7 @@ Then run
 npx knex migrate:up
 ```
 
-This should have created the database with the table specified in the knexfile, `/data/dev.db3` in this case.
+This should have created the database with the table specified in the knexfile, `/data/dev.db3` in this case. If you have sqlite studio or some other way of checking the structure you can see for yourself.
 
 ### _Add to git_
 
@@ -146,7 +157,7 @@ Now we'll add a little default data to our database to give our endpoints someth
 npx knex seed:make 01-posts
 ```
 
-Once again this should have created a seeds folder in your data directory and a file, just `01-posts.js` this time though.
+Once again this should have created a seeds folder in your data directory and a file, just `01-posts.js` this time though. We number these files ourselves so knex will run them in the order data must be entered
 
 We need to edit this default file to match the data we expect in our table:
 
@@ -156,35 +167,43 @@ exports.seed = async function (knex) {
   await knex('posts').truncate()
   await knex('posts').insert([
         {
-          user_id: 'user_1',
+          user_id: 1,
           post_title: 'test post 1',
           post_body:
             'Test post body 1',
         },
-        { user_id: 'user_1',
+        { user_id: 1,
           post_title: 'test post 2',
           post_body:
             'Test post body 2'
         },
         {
-          user_id: 'user_2',
+          user_id: 2,
           post_title: 'test post 3',
           post_body:
             'Test post body 3',
         },
         {
-          user_id: 'user_2',
+          user_id: 2,
           post_title: 'test post 4',
           post_body:
             'Test post body 4',
         },
-        { user_id: 'user_3', post_title: 'test post 5' },
+        { user_id: 3, post_title: 'test post 5' },
       ])
     })
 }
 ```
 
 _`/data/seeds/01-posts.js`_
+
+Now we can seed our database with this example data by running the following:
+
+```bash
+npx knex seed:make 01-posts
+```
+
+With these files set up, we can always revert our database to either be empty or include these basic seed files, which is great for testing purposes
 
 ### _Add to git_
 
@@ -194,3 +213,4 @@ git commit -m 'database seeded'
 ```
 
 ---
+
