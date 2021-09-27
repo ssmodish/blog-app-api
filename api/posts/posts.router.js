@@ -1,30 +1,38 @@
 const express = require('express')
-const db = require('../../data/db-config')
+const Posts = require('./posts.models')
 
 const router = express.Router()
 
-// [CREATE] a new post
-router.post('/', (req, res) => {
-  res.json({ message: 'Creating a new post' })
+// * [READ] ALL of the posts
+router.get('/', async (req, res) => {
+  try {
+    const data = await Posts.get()
+    res.json(data)
+  } catch (error) {
+   res.send(error)
+  }
 })
 // [READ] a post
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const id = req.params.id
-  res.json({ message: `Getting post with id: ${id}` })
+  const data = await Posts.getById(id)
+  res.json(data)
+})
+// [CREATE] a new post
+router.post('/', async (req, res) => {
+  const newPost = await Posts.create(req.body)
+  res.status(201).json(newPost)
 })
 // [UPDATE] the data in a post
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const id = req.params.id
-  res.json({ message: `Updated post with id: ${id}` })
+  const updatedPost = await Posts.update(id, req.body)
+  res.json(updatedPost)
 })
 // [DELETE] a post
-router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  res.json({ message: `Deleting post with id: ${id}` })
-})
-// * [READ] ALL of the posts
-router.get('/', (req, res) => {
-  res.json({ message: 'Getting all posts' })
+router.delete('/:id', async (req, res) => {
+  const deletedPost = await Posts.remove(req.params.id)
+  res.json(deletedPost)
 })
 
 module.exports = router
