@@ -8,11 +8,13 @@ The tech stack for this project includes Express, Knex, sqlite, and Okta OIDC.
 
 The coresponding front end project for this API is located **[here](https://github.com/GrammerhubTeam/blog-app-front-end)**.
 
+API endpoint documentation is located **[here](https://documenter.getpostman.com/view/1409629/UUy67Qx8)**.
+
 Step by step instructions with explainations are being formed:
 
-- [Part 1 - Building an Express server from scratch](instructions-Part1.md)
-- [Part 2 - Create a sqlite database and add routes](instructions-Part2.md)
-- [Part 3 - Incorporating Okta OIDC and serving JWT's](instructions-Part3.md)
+- [Part 1 - Building an Express server from scratch](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part1.md)
+- [Part 2 - Create a sqlite database and add routes](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part2.md)
+- [Part 3 - Incorporating Okta OIDC and serving JWT's](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part3.md)
 
 _*This is a work in progress. All contributions will be considered helpful.*_
 
