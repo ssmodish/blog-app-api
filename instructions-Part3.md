@@ -231,5 +231,8 @@ export default PostList
 
 _`/src/components/post-list.js`_
 
-So now we've added `postDataList` state to our component and then, once the component is loaded,
-the useEffect function is called which we have set to fetch an array of all of our posts
+So now we've:
+
+- Added `postDataList` state to our component
+- Created the `fetchPostListData` function which gets data from our database and sets our `postDataList` state
+- Utilised the useEffect function to call our `fetchPostListData`
