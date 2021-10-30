@@ -38,7 +38,7 @@ git commit -m 'init commit'
 Now you'll install some npm modules that you'll need for this app:
 
 ```bash
-npm i express dotenv
+npm i express cors dotenv
 npm i -D nodemon
 ```
 
@@ -248,6 +248,7 @@ const server = express()
 
 // Connect the app to global middleware
 // - functions that every endpoint passes through
+server.use(cors())
 server.use(express.json())
 
 // Endpoints check connection and perform functions
