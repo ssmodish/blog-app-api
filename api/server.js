@@ -13,13 +13,15 @@ const server = express()
 
 // Connect the app to global middleware
 // - functions that every endpoint passes through
+server.use(cors())
 server.use(express.json())
-server.use(cors)
+
 // Endpoints check connection and perform functions
 // - the code that sends and receives messages and determines what to do
 server.use('/api/posts', postsRouter)
 
 server.get('/hello', (req, res) => {
+  res.set('')
   res.json({ message: 'Hello from the Server' })
 })
 

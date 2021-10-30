@@ -195,7 +195,41 @@ Make sure you start the API we've built if it isn't already running.
 Now, in _`/src/components/post-list.js`_ we need to add the following:
 
 ```javascript
+import { useState, useEffect } from 'react'
 
+function PostList() {
+  const [postListData, setPostListData] = useState([])
+
+  const fetchPostListData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/posts', { mode: 'cors' })
+      const data = await response.json()
+      console.log({ data })
+      setPostListData(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchPostListData()
+  }, [])
+
+  return (
+    <div className='postList'>
+      <ul>
+        {postListData.map((post) => (
+          <li>Post: {post.post_title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+export default PostList
 ```
 
 _`/src/components/post-list.js`_
+
+So now we've added `postDataList` state to our component and then, once the component is loaded,
+the useEffect function is called which we have set to fetch an array of all of our posts
