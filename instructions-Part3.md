@@ -236,3 +236,44 @@ So now we've:
 - Added `postDataList` state to our component
 - Created the `fetchPostListData` function which gets data from our database and sets our `postDataList` state
 - Utilised the useEffect function to call our `fetchPostListData`
+- Are mapping through this data to display information
+
+We will now put this information into our Post component.
+
+```javascript
+import Post from './post'
+...
+  return (
+    <div className='postList'>
+      <ul>
+        {postListData.map((post) => (
+          <Post postData={post} key={post.post_id} />
+        ))}
+      </ul>
+    </div>
+  )
+...
+```
+
+_`/src/components/post-list.js`_
+
+And we'll update our post to accept the data and display it:
+
+```javascript
+function Post(props) {
+  const { post_title, post_body } = props.postData
+  return (
+    <div className='post'>
+      <li>
+        <h2>{post_title}</h2>
+        <p>{post_body}</p>
+        <button>Edit</button>
+        <button>Delete</button>
+      </li>
+    </div>
+  )
+}
+export default Post
+```
+
+_`/src/components/post.js`_
