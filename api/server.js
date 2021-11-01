@@ -1,6 +1,8 @@
 // Import dependencies
 // - brings in all of the modules we'll be using
 require('dotenv').config()
+const cors = require('cors')
+
 const postsRouter = require('./posts/posts.router')
 
 const express = require('express')
@@ -11,6 +13,7 @@ const server = express()
 
 // Connect the app to global middleware
 // - functions that every endpoint passes through
+server.use(cors())
 server.use(express.json())
 
 // Endpoints check connection and perform functions
@@ -18,6 +21,7 @@ server.use(express.json())
 server.use('/api/posts', postsRouter)
 
 server.get('/hello', (req, res) => {
+  res.set('')
   res.json({ message: 'Hello from the Server' })
 })
 
