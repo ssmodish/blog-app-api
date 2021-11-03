@@ -33,7 +33,13 @@ git commit -m 'init commit'
 ---
 
 - You should now see `package.json` as a file in your folder.
-- Add two new files - `index.js` and `.env`
+
+We'll make 2 new files:
+
+```bash
+touch index.js
+touch .env
+```
 
 Now you'll install some npm modules that you'll need for this app:
 
@@ -43,6 +49,8 @@ npm i -D nodemon
 ```
 
 **express** is a framework for building API's and web applications
+
+**cors** handles cross origin requests
 
 **dotenv** loads the `.env` into system variables - used to keep them secret
 
@@ -60,7 +68,7 @@ Add a port variable to the `.env` file:
 PORT=8080
 ```
 
-Build a basic express server
+Now we'll build `index.js` into a basic express server
 
 ```javascript
 require('dotenv').config()
@@ -80,10 +88,13 @@ _`index.js`_
 Add scripts to `package.json` to easily run your server
 
 ```json
+...
+// make sure you have a comma after devDependencies
 "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-  },
+    "dev": "nodemon index.js"
+  }
+...
 ```
 
 ---
