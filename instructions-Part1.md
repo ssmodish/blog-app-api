@@ -22,18 +22,27 @@ npm init -y
 
 ### _If you didn't pull this code from GitHub_
 
-Now is the best time to initialize git!
+Now is the best time to initialize git! Pay attention to the status between every other git command.
 
 ```bash
 git init
+git status
 git add .
-git commit -m 'init commit'
+git status
+git commit -m "init commit"
+git status
 ```
 
 ---
 
 - You should now see `package.json` as a file in your folder.
-- Add two new files - `index.js` and `.env`
+
+We'll make 2 new files:
+
+```bash
+touch index.js
+touch .env
+```
 
 Now you'll install some npm modules that you'll need for this app:
 
@@ -43,6 +52,10 @@ npm i -D nodemon
 ```
 
 **express** is a framework for building API's and web applications
+
+**cors** handles cross origin requests
+
+More documentation on these is available at [Expressjs.com](https://expressjs.com/)
 
 **dotenv** loads the `.env` into system variables - used to keep them secret
 
@@ -54,15 +67,16 @@ npm i -D nodemon
 
 ### Now for some code!
 
-Add a port variable to the `.env` file:
+Open the `.env` file and add the following:
 
 ```
 PORT=8080
 ```
 
-Build a basic express server
+Now we'll build `index.js` into a basic express server
 
 ```javascript
+// index.js
 require('dotenv').config()
 const express = require('express')
 
@@ -75,24 +89,27 @@ server.get('/hello', (req, res) => {
 server.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}!`))
 ```
 
-_`index.js`_
-
-Add scripts to `package.json` to easily run your server
+Replace scripts in `package.json` to easily run your server
 
 ```json
+// package.json
+...
 "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-  },
+    "dev": "nodemon index.js"
+  }
+...
 ```
 
 ---
 
 ### Make sure it's working
 
-Run `npm run dev` - if there are no errors it's working!
+Type in `npm run dev` in your terminal - if there are no errors it's working!
 In your browser - go to `localhost:8080/hello`, you should see something like this:
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lv45fqln64hkyoddku9o.png)
+
+## Congratulations - you just build a web server!
 
 ---
 
@@ -108,7 +125,7 @@ NOW it's safe to commit our files
 
 ```bash
 git add .
-git commit -m 'first working server'
+git commit -m "first working server"
 ```
 
 ---
