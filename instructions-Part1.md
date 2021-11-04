@@ -22,12 +22,15 @@ npm init -y
 
 ### _If you didn't pull this code from GitHub_
 
-Now is the best time to initialize git!
+Now is the best time to initialize git! Pay attention to the status between every other git command.
 
 ```bash
 git init
+git status
 git add .
-git commit -m 'init commit'
+git status
+git commit -m "init commit"
+git status
 ```
 
 ---
@@ -52,6 +55,8 @@ npm i -D nodemon
 
 **cors** handles cross origin requests
 
+More documentation on these is available at [Expressjs.com](https://expressjs.com/)
+
 **dotenv** loads the `.env` into system variables - used to keep them secret
 
 **nodemon** restarts the server when it detects changes in our code files so we don't have to.
@@ -62,7 +67,7 @@ npm i -D nodemon
 
 ### Now for some code!
 
-Add a port variable to the `.env` file:
+Open the `.env` file and add the following:
 
 ```
 PORT=8080
@@ -71,6 +76,7 @@ PORT=8080
 Now we'll build `index.js` into a basic express server
 
 ```javascript
+// index.js
 require('dotenv').config()
 const express = require('express')
 
@@ -83,13 +89,11 @@ server.get('/hello', (req, res) => {
 server.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}!`))
 ```
 
-_`index.js`_
-
-Add scripts to `package.json` to easily run your server
+Replace scripts in `package.json` to easily run your server
 
 ```json
+// package.json
 ...
-// make sure you have a comma after devDependencies
 "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -101,9 +105,11 @@ Add scripts to `package.json` to easily run your server
 
 ### Make sure it's working
 
-Run `npm run dev` - if there are no errors it's working!
+Type in `npm run dev` in your terminal - if there are no errors it's working!
 In your browser - go to `localhost:8080/hello`, you should see something like this:
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lv45fqln64hkyoddku9o.png)
+
+## Congratulations - you just build a web server!
 
 ---
 
@@ -119,7 +125,7 @@ NOW it's safe to commit our files
 
 ```bash
 git add .
-git commit -m 'first working server'
+git commit -m "first working server"
 ```
 
 ---
