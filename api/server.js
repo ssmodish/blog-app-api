@@ -21,7 +21,6 @@ server.use(express.json())
 server.use('/api/posts', postsRouter)
 
 server.get('/hello', (req, res) => {
-  res.set('')
   res.json({ message: 'Hello from the Server' })
 })
 
