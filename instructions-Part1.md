@@ -69,14 +69,15 @@ More documentation on these is available at [Expressjs.com](https://expressjs.co
 
 Open the `.env` file and add the following:
 
-```
+```title=".env"
 PORT=8080
 ```
 
 Now we'll build `index.js` into a basic express server
 
-```javascript
+```javascript title="index.js"
 // index.js
+
 require('dotenv').config()
 const express = require('express')
 
@@ -91,8 +92,9 @@ server.listen(process.env.PORT, () => console.log(`Listening on port ${process.e
 
 Replace scripts in `package.json` to easily run your server
 
-```json
+```json title="package.json"
 // package.json
+
 ...
 "scripts": {
     "start": "node index.js",
@@ -177,7 +179,9 @@ Now it will ask us a few questions - for this project, using arrow keys and the 
 
 This should have created a file called `.eslintrc.json` with the following contents:
 
-```json
+```json title=".eslint.json"
+// .eslint.json
+
 {
   "env": {
     "commonjs": true,
@@ -224,13 +228,17 @@ Now cut everything but the `server.listen` line out of `index.js` and paste it i
 
 At the top of `index.js` add the line
 
-```javascript
+```javascript title="index.js"
+// index.js
+
 const server = require('./api/server')
 ```
 
 and at the bottom of `server.js` add the line
 
-```javascript
+```javascript title="/api/server.js"
+// /api/server.js
+
 module.exports = server
 ```
 
@@ -253,7 +261,9 @@ git commit -m 'separate server into api directory'
 
 Express apps generally follow a pattern - our `server.js` file is already checking off a number of the boxes.
 
-```javascript
+```javascript title="/api/server.js"
+// /api/server.js
+
 // Import dependancies
 // - brings in all of the modules we'll be using
 require('dotenv').config()
@@ -279,10 +289,6 @@ server.get('/hello', (req, res) => {
 module.exports = server
 ```
 
-### Note how we added a line in the middleware section.
-
-`express.json()` parses JSON data out of incoming requests
-
 ---
 
 ## Step 5: Separation of Concerns II: Routing Endpoints
@@ -300,7 +306,9 @@ Let's make a posts folder in the api directory and `posts.router.js` file inside
 
 Add some comments
 
-```jsx
+```javascript title="/api/posts/posts.router.js"
+// /api/posts/posts.router.js
+
 // [CREATE] a new post
 // [READ] ALL of the posts
 // [READ] a single post
@@ -311,6 +319,7 @@ Add some comments
 These roughly translate to http protocol methods and SQL commands
 
 ```
+-------- → - HTTP - → - SQL -
 [CREATE] → [POST]   → [INSERT]
 [READ]   → [GET]    → [SELECT]
 [UPDATE] → [PUT]    → [UPDATE]
@@ -329,11 +338,13 @@ The other thing we need to know a little about is the http protocol. In order to
 
 # TODO: _Talk about request and response_
 
-Since this will be part of our express server, we have to import it by adding `const express = require('express')` at the top of our file. Unlike the server, we are creating a router, so right after that type `const router = express.Router()`
+Since this will be part of our express server, we have to import it by adding `const express = require('express')` at the top of our file. Unlike the server, we are creating a endpoints on a route, so we will inform express by typing `const router = express.Router()` on the next line.
 
 Now we'll put in some endpoints:
 
-```javascript
+```javascript title="/api/posts/posts.router.js"
+// /api/posts/posts.router.js
+
 const express = require('express')
 const router = express.Router()
 
@@ -366,19 +377,27 @@ module.exports = router
 
 And then import it into our server
 
-```javascript
+```javascript title="/api/server.js"
+// /api/server.js
+
 // Import dependencies
 // - brings in all of the modules we'll be using
 require('dotenv').config()
+const cors = require('cors')
+
 const postsRouter = require('./posts/posts.router')
 
 const express = require('express')
-```
 
-_`/api/server.js`_
-and use it
+// Create and instance of an express app
+// - create the actual server object
+const server = express()
 
-```javascript
+// Connect the app to global middleware
+// - functions that every endpoint passes through
+server.use(cors())
+server.use(express.json())
+
 // Endpoints check connection and perform functions
 // - the code that sends and receives messages and determines what to do
 server.use('/api/posts', postsRouter)
@@ -386,9 +405,11 @@ server.use('/api/posts', postsRouter)
 server.get('/hello', (req, res) => {
   res.json({ message: 'Hello from the Server' })
 })
-```
 
-_`/api/server.js`_
+// Listen to or export server
+// - what the rest of the world connects to
+module.exports = server
+```
 
 # _TODO: POSTMAN TESTS_
 
