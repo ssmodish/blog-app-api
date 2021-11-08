@@ -229,7 +229,7 @@ Now cut everything but the `server.listen` line out of `index.js` and paste it i
 At the top of `index.js` add the line
 
 ```javascript title="index.js"
-// index.justifyContent: 'space-around',
+// index.js
 
 const server = require('./api/server')
 ```
