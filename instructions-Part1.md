@@ -77,6 +77,7 @@ Now we'll build `index.js` into a basic express server
 
 ```javascript title="index.js"
 // index.js
+
 require('dotenv').config()
 const express = require('express')
 
@@ -93,6 +94,7 @@ Replace scripts in `package.json` to easily run your server
 
 ```json title="package.json"
 // package.json
+
 ...
 "scripts": {
     "start": "node index.js",
@@ -178,6 +180,8 @@ Now it will ask us a few questions - for this project, using arrow keys and the 
 This should have created a file called `.eslintrc.json` with the following contents:
 
 ```json title=".eslint.json"
+// .eslint.json
+
 {
   "env": {
     "commonjs": true,
@@ -225,12 +229,16 @@ Now cut everything but the `server.listen` line out of `index.js` and paste it i
 At the top of `index.js` add the line
 
 ```javascript title="index.js"
+// index.justifyContent: 'space-around',
+
 const server = require('./api/server')
 ```
 
 and at the bottom of `server.js` add the line
 
 ```javascript title="/api/server.js"
+// /api/server.js
+
 module.exports = server
 ```
 
@@ -254,6 +262,8 @@ git commit -m 'separate server into api directory'
 Express apps generally follow a pattern - our `server.js` file is already checking off a number of the boxes.
 
 ```javascript title="/api/server.js"
+// /api/server.js
+
 // Import dependancies
 // - brings in all of the modules we'll be using
 require('dotenv').config()
