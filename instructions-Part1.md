@@ -268,6 +268,7 @@ Express apps generally follow a pattern - our `server.js` file is already checki
 // - brings in all of the modules we'll be using
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 
 // Create an instance of an express app
 // - create the actual server object
