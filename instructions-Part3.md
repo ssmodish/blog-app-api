@@ -85,6 +85,8 @@ touch src/components/post-form.js
 Now, for each `<div>` with a class name - create components that match those divs
 
 ```javascript
+// /src/components/navbar.js
+
 function Navbar() {
   return (
     <div id='navbar'>
@@ -101,9 +103,10 @@ function Navbar() {
 export default Navbar
 ```
 
-_`/src/components/navbar.js`_
 
 ```javascript
+// /src/components/post.js
+
 function Post() {
   return (
     <div className='post'>
@@ -117,9 +120,9 @@ function Post() {
 export default Post
 ```
 
-_`/src/components/post.js`_
-
 ```javascript
+// /src/components/post-list.js
+
 import Post from './post'
 function PostList() {
   return (
@@ -136,9 +139,9 @@ function PostList() {
 export default PostList
 ```
 
-_`/src/components/post-list.js`_
-
 ```javascript
+// /src/components/post-form.js
+
 function PostForm() {
   return (
     <div className='form'>
@@ -157,12 +160,12 @@ function PostForm() {
 export default PostForm
 ```
 
-_`/src/components/post-form.js`_
-
 Notice how we imported and used the Post component into the PostList
 We'll now we will import and replace these sections in `App.js`.
 
 ```javascript
+// /src/App.js
+
 import Navbar from './components/navbar'
 import PostForm from './components/post-form'
 import PostList from './components/post-list'
@@ -182,8 +185,6 @@ function App() {
 export default App
 ```
 
-_`/src/App.js`_
-
 ---
 
 ## Activate API Powers!
@@ -195,7 +196,10 @@ Make sure you start the API we've built if it isn't already running.
 Now, in _`/src/components/post-list.js`_ we need to add the following:
 
 ```javascript
+// /src/components/post-list.js
+
 import { useState, useEffect } from 'react'
+import Post from './post'
 
 function PostList() {
   const [postListData, setPostListData] = useState([])
@@ -229,8 +233,6 @@ function PostList() {
 export default PostList
 ```
 
-_`/src/components/post-list.js`_
-
 So now we've:
 
 - Added `postDataList` state to our component
@@ -241,6 +243,8 @@ So now we've:
 We will now put this information into our Post component.
 
 ```javascript
+// /src/components/post-list.js
+
 import Post from './post'
 ...
   return (
@@ -255,11 +259,11 @@ import Post from './post'
 ...
 ```
 
-_`/src/components/post-list.js`_
-
 And we'll update our post to accept the data and display it:
 
 ```javascript
+// /src/components/post.js
+
 function Post(props) {
   const { post_title, post_body } = props.postData
   return (
@@ -275,5 +279,3 @@ function Post(props) {
 }
 export default Post
 ```
-
-_`/src/components/post.js`_
