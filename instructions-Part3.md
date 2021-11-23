@@ -16,6 +16,8 @@ Then we'll sketch out the components we'll need:
 We'll edit our fresh React app by going to `/src/App.js` and replace everything in there with the following:
 
 ```javascript
+// /src/App.js
+
 function App() {
   return (
     <div>
@@ -63,8 +65,6 @@ function App() {
 
 export default App
 ```
-
-_`/src/App.js`_
 
 Now we'll break this up into components.
 Start by adding a directory
