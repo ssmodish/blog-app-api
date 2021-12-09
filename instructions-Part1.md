@@ -442,6 +442,6 @@ git push -u origin main
 ```
 
 That should have pushed your code!
-See you in [Part 2](https://github.com/GrammerhubTeam/blog-app-api/edit/main/instructions-Part2.md)
+See you in [Part 2](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part2.md)
 
 ---
