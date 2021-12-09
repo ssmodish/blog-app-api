@@ -442,6 +442,6 @@ git push -u origin main
 ```
 
 That should have pushed your code!
-See you in [Part 2](https://dev.to/ssmodish/create-an-api-for-a-simple-blog-app-part-2-16kh-temp-slug-29197?preview=9aac60d0637abca4c3b2331f1231e2f89ab10fbf07d50627b16b76f196270d3bb0e11bc0e9b9b7f2babe33900d9bf0f75a213aba776dcdb6322eda3c)
+See you in [Part 2](https://github.com/GrammerhubTeam/blog-app-api/edit/main/instructions-Part2.md)
 
 ---
