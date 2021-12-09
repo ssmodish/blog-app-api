@@ -1,4 +1,4 @@
-_This is a continuation of [Create an API for a simple blog app - Part 1: Express Server](https://dev.to/ssmodish/create-an-api-for-a-simple-blog-app-part-1-5h1j-temp-slug-7718635?preview=b8b87e0b26081bfe5d5268419bc4d42b0d6cbc85d24224e08b425a2a946cfa80a0b070eae7260ef6e47d6fdb59c00636377f60d6aa326752e58b953b)_
+_This is a continuation of [Create an API for a simple blog app - Part 1: Express Server](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part2.md)_
 
 ---
 
