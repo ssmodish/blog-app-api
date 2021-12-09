@@ -22,6 +22,7 @@ npx knex init
 This actually generates a file for three different environments, we'll edit the newly created `knexfile.js` down - we also have to add a line to prevent sqlite from crashing:
 
 ```javascript
+// _`/knexfile.js`_
 module.exports = {
   development: {
     client: 'sqlite3',
@@ -33,11 +34,11 @@ module.exports = {
 }
 ```
 
-_`/knexfile.js`_
-
 Now we'll make a db-config file in our data folder that we can utilize throughout our app when we need to connect to the database.
 
 ```javascript
+// _`/data/db-config.js`_
+
 const knex = require('knex')
 
 const config = require('../knexfile.js')
@@ -46,8 +47,6 @@ const db = knex(config.development)
 
 module.exports = db
 ```
-
-_`/data/db-config.js`_
 
 Now we'll add our models file that communicates directly with our database
 
@@ -58,6 +57,8 @@ touch api/posts/posts.models.js
 and start it with
 
 ```javascript
+// _`/api/posts/posts.models.js`_
+
 const db = require('../../data/db-config')
 
 module.exports = {
@@ -69,19 +70,17 @@ module.exports = {
 }
 ```
 
-_`/api/posts/posts.models.js`_
-
 ### Create a migration using Knex
 
 Using Knex, migrations are the files used to setup the tables in our database. First we'll tell Knex where to save them by adding the following to the knexfile.
 
 ```javascript
+// _`/knexfile.js`_
+
   migrations: {
     directory: './data/migrations',
   },
 ```
-
-_`/knexfile.js`_
 
 And now we'll run the following:
 
@@ -94,6 +93,8 @@ That should have created a `/data/migrations` directory and put a file _`<timest
 Open up _`<timestamp>_posts-schema.js`_ and fill it out like so:
 
 ```javascript
+// _`/data/migrations/<timestamp>_posts-schema.js`_
+
 exports.up = function (knex) {
   return knex.schema.createTable('posts', (tbl) => {
     tbl.increments('post_id') // automatically increments a new number for each entry - this will be the Primary Key
@@ -108,8 +109,6 @@ exports.down = function (knex) {
 }
 ```
 
-_`/data/migrations/<timestamp>_posts-schema.js`_
-
 Then run
 
 ```bash
@@ -123,10 +122,10 @@ This should have created the database with the table specified in the knexfile, 
 We probably shouldn't commit our database, so add the sqlite database file format to our `.gitignore` file.
 
 ```text
+// _`.gitignore`_
+
 *.db3
 ```
-
-_`.gitignore`_
 
 We should then be able to add all remaining files to our repo.
 
@@ -143,13 +142,13 @@ git commit -m 'add sqlite database and knex'
 
 Using Knex, seeds are the files used to fill our database with some data. First we'll tell Knex where to save the seeds by adding the following to the knexfile.
 
-```
+``` JSON
+// _`/knexfile.js`_
+
   seeds: {
     directory: './data/seeds',
   },
 ```
-
-_`/knexfile.js`_
 
 Now we'll add a little default data to our database to give our endpoints something to return.
 
@@ -162,6 +161,8 @@ Once again this should have created a seeds folder in your data directory and a 
 We need to edit this default file to match the data we expect in our table:
 
 ```javascript
+// _`/data/seeds/01-posts.js`_
+
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex('posts').truncate()
@@ -195,8 +196,6 @@ exports.seed = async function (knex) {
 }
 ```
 
-_`/data/seeds/01-posts.js`_
-
 Now we can seed our database with this example data by running the following:
 
 ```bash
@@ -221,6 +220,8 @@ git commit -m 'database seeded'
 You might have already guessed that we will be keeping our database calls separated from our routes with this setup. Any database calls should be made in our models file and our routes should just call the methods we setup there. This should make it easy to maintain. If we ever decide to change over to a different database, if one supported by knex we need only change or add to the `knexfile`. Otherwise, we just need to adjust our models to work with whatever other database we choose.
 
 ```javascript
+// _`api/posts/posts.router.js`_
+
 const express = require('express')
 const Posts = require('./posts.models')
 
@@ -261,11 +262,12 @@ router.delete('/:id', async (req, res) => {
 module.exports = router
 ```
 
-_`api/posts/posts.router.js`_
-
 ---
 
 ```javascript
+// _`api/posts/posts.models.js`_
+
+
 const db = require('../../data/db-config')
 
 function get() {
@@ -306,7 +308,4 @@ module.exports = {
 }
 ```
 
-_`api/posts/posts.models.js`_
-
 ---
-
