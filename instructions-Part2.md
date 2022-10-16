@@ -1,4 +1,5 @@
-_This is a continuation of [Create an API for a simple blog app - Part 1: Express Server](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part2.md)_
+_This is a continuation of [Create an API for a simple blog app - Part 1: Express Server](https://github.com/GrammerhubTeam/blog-app-api/blob/main/instructions-Part1
+.md)_
 
 ---
 
